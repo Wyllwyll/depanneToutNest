@@ -13,7 +13,7 @@ export class Reservation extends BaseEntity {
     @PrimaryGeneratedColumn()
     id: number;
 
-    @Column()
+    @Column({unique:true})
     numero: number;
 
     @ManyToOne(() => User, (user) => user.id, {eager: true})
