@@ -32,5 +32,9 @@ export class CreateUserDto {
     @IsString()
     zipCode : string
 
+    @IsNotEmpty()
+    @IsString()
+    city : string
+
 
 }
