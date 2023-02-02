@@ -6,9 +6,9 @@ import { User } from './entities/user.entity';
 export class UsersService {
   /**
    * Ajout d'un user
-   * @param name  nom du user
-   * @param hash  mot de pass hacher
-   * @returns     Le nouveau user
+   * param name  nom du user
+   * param hash  mot de pass hacher
+   * returns     Le nouveau user
    */
   async create(createUserDto: CreateUserDto) {
     return await User.create(createUserDto).save();
@@ -16,8 +16,8 @@ export class UsersService {
 
   /**
    * Récupération des info d'un users
-   * @param userId    id du user
-   * @returns         Le user avec ses commandes
+   * param userId    id du user
+   * returns         Le user avec ses commandes
    */
   /*
   async findOneById(userId: number): Promise<User> {
@@ -39,8 +39,8 @@ export class UsersService {
 
   /**
    * Récupération d'un user par son nom **ATTENTION : contient le password**
-   * @param name
-   * @returns
+   * param name
+   * returns
    */
 
   

@@ -39,8 +39,8 @@ export class User extends BaseEntity {
     city: string
 
     @OneToMany(() => Order, (order) => order.user)
+    orders : Order[]
 
-    orders: Order[]
 
 
 }
