@@ -1,12 +1,11 @@
-import { timestamp } from "rxjs";
 import { User } from "src/users/entities/user.entity";
-import { BaseEntity, Column, Entity, ManyToOne, OneToOne, PrimaryColumn } from "typeorm";
+import { BaseEntity, Column, Entity, ManyToOne, OneToOne, PrimaryColumn, PrimaryGeneratedColumn } from "typeorm";
 
 
 @Entity('orders')
 export class Order extends BaseEntity {
 
-    @PrimaryColumn()
+    @PrimaryGeneratedColumn()
     id: number
 
 
