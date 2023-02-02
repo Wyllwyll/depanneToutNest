@@ -5,12 +5,16 @@ import { UpdateReservationDto } from './dto/update-reservation.dto';
 
 @Controller('reservation')
 export class ReservationController {
-  constructor(private readonly ReservationService: ReservationService) {}
+  constructor(private readonly reservationService: ReservationService) {}
 
   
  @Post("addreservation")
   create(@Body() createReservationDto: CreateReservationDto) {
     return this.reservationService.create(createReservationDto);
+
+
+
+
   }
 
   @Get("namereservationforuser")

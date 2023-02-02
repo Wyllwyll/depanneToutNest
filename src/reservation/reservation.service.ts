@@ -1,11 +1,21 @@
 import { Injectable } from '@nestjs/common';
+import { User } from 'src/users/entities/user.entity';
 import { CreateReservationDto } from './dto/create-reservation.dto';
 import { UpdateReservationDto } from './dto/update-reservation.dto';
+import { Reservation } from './entities/reservation.entity';
 
 @Injectable()
 export class ReservationService {
-  create(createReservationDto: CreateReservationDto) {
-    return 'This action adds a new reservation';
+ 
+    async create(createReservationDto: CreateReservationDto) {
+      const newReservation = new Reservation();
+      newReservation.user = await User.findOneBy({id: createReservationDto.userid})//createReservationDto.id;
+      newReservation.numero = newReservation.id+10
+      await newReservation.save();
+      return await this.findOneById(newReservation.id)
+    }
+
+
   }
 
   findAll() {

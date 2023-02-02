@@ -4,10 +4,10 @@ export class CreateReservationDto {
 
     @IsInt()
     @IsNotEmpty()
-    id : number
+    userid : number
 
     @IsInt()
     @IsNotEmpty()
-    numero : number
+    order : number
 }
 
