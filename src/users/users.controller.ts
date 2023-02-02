@@ -16,6 +16,7 @@ import { UsersService } from './users.service';
 import { CreateUserDto } from './dto/create-user.dto';
 import * as bcrypt from 'bcrypt';
 import * as jwt from 'jsonwebtoken'; // token
+import { LoginUserDto } from './dto/login-user.dto';
 
 ConfigModule.forRoot()
 const accessTokenSecret = process.env.SECRET_TOKEN!; // token
@@ -30,53 +31,55 @@ export class UsersController {
     const userExist = await this.usersService.findOneByMail(createUserDto.mail);
 
     if (userExist) {
-      throw new ConflictException();
+      throw new ConflictException("Cette Email est déjà enregistré");
     }
+    if (createUserDto.password !== createUserDto.password_verif){
+      throw new ConflictException("Les 2 mots de passe ne correspondent pas")
+    }
+
     createUserDto.password = await bcrypt.hash(createUserDto.password, 10);
     
     const data = await this.usersService.create(createUserDto);
     return {
       statusCode: 201,
-      message: [`${createUserDto.username} bien enregistré`],
+      message: `${createUserDto.username} bien enregistré`,
       succes: 'Created',
       data: data,
     };
   }
 
   /** Authentification d'un User, fourni le token */
-  /*
+  
   @Post('login')
   @UsePipes(new ValidationPipe({ transform: true }))
-  async login(@Body() createUserDto: CreateUserDto) {
-    const data = await this.usersService.findOneByName(createUserDto.name);
+  async login(@Body() loginUserDto: LoginUserDto) {
+    const data = await this.usersService.findOneByMail(loginUserDto.mail);
 
     if (!data) {
-      throw new UnauthorizedException();
+      throw new UnauthorizedException("Mail ou mot de passe incorrecte");
     }
-    const isOk = await bcrypt.compare( createUserDto.password, data.password);
+    const isOk = await bcrypt.compare( loginUserDto.password, data.password);
 
     if (!isOk) {
-      throw new UnauthorizedException();
+      throw new UnauthorizedException("Mail ou mot de passe incorrecte");
     }
 
     const token = {
-      id: data.id,
-      admin_lvl: data.admin_lvl,
+      id: data.id
     };
 
     return {
       statusCode: 200,
-      message: [`Connection de ${createUserDto.name}`],
+      message: [`Connection de ${data.username}`],
       succes: 'OK',
       data: {
-        id: data.id,
-        admin_lvl: data.admin_lvl,
-        name: data.name,
+        username: data.username,
+        mail: data.mail,
         token: jwt.sign(token, accessTokenSecret!),
       },
     };
   }
-*/
+
 /*
   @Get(':id')
   @Bind(Param('id', new ParseIntPipe()))
