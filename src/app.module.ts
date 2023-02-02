@@ -7,6 +7,8 @@ import { OrderModule } from './order/order.module';
 import { Order } from './order/entities/order.entity';
 import { User } from './users/entities/user.entity';
 import { UsersModule } from './users/users.module';
+import { ReservationModule} from './reservation/reservation.module';
+import { Reservation } from './reservation/entities/reservation.entity';
 
 
 @Module({
@@ -19,11 +21,12 @@ import { UsersModule } from './users/users.module';
       username: process.env.DB_USERNAME,
       password: process.env.DB_PASSWORD,
       database: process.env.DB_NAME,
-      entities: [Order,User],
+      entities: [Order,User, Reservation],
       synchronize: true,
     }),
     OrderModule,
-    UsersModule
+    UsersModule,
+    ReservationModule
 
 
   ],
