@@ -18,9 +18,9 @@ export class ReservationController {
   findAll() {
     return this.reservationService.findAllReservation();
   }
+}
 
-
-  findOne(@Body() id: string, updateOrderDto: UpdateOrderDto) {
+  /* findOne(@Body() id: string, updateOrderDto: UpdateOrderDto) {
     return this.reservationService.findReservation(updateOrderDto);
   }
 
@@ -39,3 +39,4 @@ export class ReservationController {
     return this.reservationService.remove(+id);
   }
 }
+ */

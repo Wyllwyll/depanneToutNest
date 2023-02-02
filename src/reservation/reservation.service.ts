@@ -8,22 +8,26 @@ import { Reservation } from './entities/reservation.entity';
 
 @Injectable()
 export class ReservationService {
-
+  
     async create(createReservationDto: CreateReservationDto) {
       const newReservation = new Reservation();
       newReservation.user = await User.findOneBy({id: createReservationDto.userId})//createReservationDto.id;
       newReservation.order = await Order.findOneBy({id: createReservationDto.order})
       newReservation.numero = newReservation.id+10
       await newReservation.save();
-      return await User, Order.findOneBy(createReservationDto.userId, createReservationDto.order )
+      return await User, Order.findOneBy(createReservationDto.userId, createReservationDto.order );
     }
   }
 
-   async findAllReservation() {
+   findAllReservation() {
     const reservation = await Reservation.find()
-    return reservation
+    return reservation;
   }
 
+
+/* function findAllReservation() {
+  throw new Error('Function not implemented.');
+}
   /* findOne(id: number) {
     return `This action returns a #${id} reservation`;
   }
