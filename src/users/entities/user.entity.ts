@@ -1,9 +1,9 @@
 import { Order } from "src/order/entities/order.entity";
-import { Column, Entity, ManyToOne, OneToMany, PrimaryGeneratedColumn } from "typeorm";
+import { BaseEntity, Column, Entity, ManyToOne, OneToMany, PrimaryGeneratedColumn } from "typeorm";
 
 
 @Entity("users")
-export class User {
+export class User extends BaseEntity {
 
     @PrimaryGeneratedColumn()
     id : number

@@ -15,7 +15,7 @@ export class OrderService {
       start_time: createOrderDto.start_time,
       end_time: createOrderDto.end_time,
       reserved: createOrderDto.reserved,
-      user: User.findOneBy()
+      user: await User.findOneBy({id:createOrderDto.ownerId})
 
     })
     const order = await Order.save(newOrder)
@@ -28,13 +28,23 @@ export class OrderService {
 
 
 
-  findAll() {
-    return `This action returns all order`;
+  async findAll() {
+    const order=await Order.find()
+    return order;
   }
 
-  findOne(id: number) {
-    return `This action returns a #${id} order`;
+
+
+
+
+
+  async findOne() {
+    const order=await Order.findBy()
+    return order;
   }
+
+
+
 
   update(id: number, updateOrderDto: UpdateOrderDto) {
     return `This action updates a #${id} order`;
