@@ -1,15 +1,15 @@
 import { Order } from "src/order/entities/order.entity";
-import { BaseEntity, Column, Entity, ManyToOne, OneToMany, PrimaryGeneratedColumn } from "typeorm";
+import { BaseEntity, Column, Entity, OneToMany, PrimaryGeneratedColumn } from "typeorm";
 
 
 @Entity("users")
 export class User extends BaseEntity {
 
     @PrimaryGeneratedColumn()
-    id : number
+    id: number
 
     @Column()
-    username : string
+    username: string
 
     
     @Column()
@@ -36,10 +36,11 @@ export class User extends BaseEntity {
     zipCode : string
 
     @Column()
-    city : string
+    city: string
 
     @OneToMany(() => Order, (order) => order.user)
     orders : Order[]
 
-    
+
+
 }
