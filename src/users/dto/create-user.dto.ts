@@ -1,5 +1,4 @@
-import { IsNotEmpty } from "class-validator";
-import { IsEmail, IsString } from "class-validator/types/decorator/decorators";
+import { IsEmail, IsNotEmpty, IsString } from "class-validator";
 
 export class CreateUserDto {
     @IsNotEmpty()
@@ -31,6 +30,10 @@ export class CreateUserDto {
     @IsNotEmpty()
     @IsString()
     zipCode : string
+
+    @IsNotEmpty()
+    @IsString()
+    city : string
 
 
 }

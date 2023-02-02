@@ -6,23 +6,20 @@ import { User } from './entities/user.entity';
 export class UsersService {
   /**
    * Ajout d'un user
-   * @param name  nom du user
-   * @param hash  mot de pass hacher
-   * @returns     Le nouveau user
+   * param name  nom du user
+   * param hash  mot de pass hacher
+   * returns     Le nouveau user
    */
   async create(createUserDto: CreateUserDto) {
-    const newUser = new User();
-    newUser.name = createUserDto.name;
-    newUser.password = createUserDto.password;
-    await newUser.save();
-    return await this.findOneById(newUser.id)
+    return await User.create(createUserDto).save();
   }
 
   /**
    * Récupération des info d'un users
-   * @param userId    id du user
-   * @returns         Le user avec ses commandes
+   * param userId    id du user
+   * returns         Le user avec ses commandes
    */
+  /*
   async findOneById(userId: number): Promise<User> {
     
     const user = await User.findOne({
@@ -36,29 +33,32 @@ export class UsersService {
         id: userId,
       },
     });
-    console.log(user.somme());
     
     return user;
-  }
+  }*/
 
   /**
    * Récupération d'un user par son nom **ATTENTION : contient le password**
-   * @param name
-   * @returns
+   * param name
+   * returns
    */
-  async findOneByName(name: string): Promise<User | null> {
+
+  
+  async findOneByMail(mail: string): Promise<User | null> {
     return await User.findOne({
       select: {
         id: true,
-        name: true,
-        admin_lvl: true,
+        username: true,
+        mail: true,
         password: true,
       },
       where: {
-        name: name,
+        mail: mail,
       },
     });
   }
+  
+ /*
   async update(userId: number, adminLvl: number): Promise<User | null> {
     const user = await User.findOneBy({ id: userId });
     if (user !== null) {
@@ -67,4 +67,5 @@ export class UsersService {
     }
     return user;
   }
+*/
 }

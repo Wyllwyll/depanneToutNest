@@ -7,6 +7,8 @@ import { Order } from './entities/order.entity';
 
 @Injectable()
 export class OrderService {
+
+
   async createOrder(createOrderDto: CreateOrderDto) {
 
     const newOrder = Order.create({
@@ -25,13 +27,10 @@ export class OrderService {
   }
 
 
-
   async findAllOrder() {
     const order = await Order.find()
     return order;
   }
-
-
 
 
   async findOrder(updateOrderDto: UpdateOrderDto) {
@@ -40,10 +39,20 @@ export class OrderService {
   }
 
 
+  async updateOrder(userId: number, updateOrderDto: UpdateOrderDto) {
+    const updateOrder = await Order.findOneBy({ id: userId });
+    updateOrder.name = updateOrderDto.name
+    updateOrder.city = updateOrderDto.city
+    updateOrder.price = updateOrderDto.price
+    updateOrder.start_time = updateOrderDto.start_time
+    updateOrder.end_time = updateOrderDto.end_time
+
+    const order = await Order.save(updateOrder)
+    return order
+  }
 
 
-
-  ifReserved(id: number) {
+  async ifReserved(id: number) {
     return `This action removes a #${id} order`;
   }
 }

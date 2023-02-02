@@ -1,5 +1,4 @@
-import { IsInt } from "class-validator";
-import { IsBoolean, IsDate, IsNotEmpty } from "class-validator/types/decorator/decorators";
+import { IsBoolean, IsDate, IsInt, IsNotEmpty } from "class-validator";
 
 export class CreateOrderDto {
 
