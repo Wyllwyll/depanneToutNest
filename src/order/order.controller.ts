@@ -15,29 +15,22 @@ export class OrderController {
 
 
 
-  @Get()
+  @Get("getallorder")
   findAll() {
-    return this.orderService.findAll();
+    return this.orderService.findAllOrder();
   }
 
 
 
-  @Get(':id')
-  findOne(@Param('id') id: string) {
-    return this.orderService.findOne();
-  }
-
-
-
-  @Patch(':id')
-  update(@Param('id') id: string, @Body() updateOrderDto: UpdateOrderDto) {
-    return this.orderService.update(+id, updateOrderDto);
+  @Get('nameorder')
+  findOne(@Body() updateOrderDto: UpdateOrderDto) {
+    return this.orderService.findOrder(updateOrderDto);
   }
 
 
   
   @Delete(':id')
   remove(@Param('id') id: string) {
-    return this.orderService.remove(+id);
+    return this.orderService.ifReserved(+id);
   }
 }

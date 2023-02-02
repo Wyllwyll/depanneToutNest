@@ -1,3 +1,4 @@
+import { Reservation } from "src/reservation/entities/reservation.entity";
 import { User } from "src/users/entities/user.entity";
 import { BaseEntity, Column, Entity, ManyToOne, OneToOne, PrimaryColumn, PrimaryGeneratedColumn } from "typeorm";
 
@@ -46,10 +47,7 @@ export class Order extends BaseEntity {
     user: User
 
 
-    @OneToOne(() => Reservation, (reservation) => reservation.orders,
-        {
-            nullable: false
-        })
+    @OneToOne(() => Reservation, (reservation) => reservation.order,)
     reservation: Reservation
 
 
