@@ -11,6 +11,29 @@ export class User extends BaseEntity {
     @Column()
     username: string
 
+    
+    @Column()
+    mail : string
+
+    
+    @Column({select : false})
+    password : string
+
+    
+    @Column()
+    adress_line1 : string
+
+    
+    @Column()
+    adress_line2 : string
+
+    
+    @Column()
+    adress_line3 : string
+
+    
+    @Column()
+    zipCode : string
 
     @Column()
     mail: string
