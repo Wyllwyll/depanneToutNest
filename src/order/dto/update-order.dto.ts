@@ -1,9 +1,21 @@
-import { IsNotEmpty } from 'class-validator';
+import { IsDate, IsNotEmpty, IsNumber, IsString } from 'class-validator';
+
+
 
 
 export class UpdateOrderDto {
     @IsNotEmpty()
+    @IsString()
     name: string
-    price:number
-    city:string
+    city: string
+
+    @IsNotEmpty()
+    @IsNumber()
+    price: number
+
+
+    @IsNotEmpty()
+    @IsDate()
+    start_time: Date
+    end_time: Date
 }
