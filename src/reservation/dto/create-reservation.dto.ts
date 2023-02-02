@@ -4,7 +4,7 @@ export class CreateReservationDto {
 
     @IsInt()
     @IsNotEmpty()
-    userid : number
+    userId : number
 
     @IsInt()
     @IsNotEmpty()
