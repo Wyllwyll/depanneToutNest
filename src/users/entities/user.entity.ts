@@ -1,3 +1,4 @@
+import { Order } from "src/order/entities/order.entity";
 import { Column, Entity, ManyToOne, OneToMany, PrimaryGeneratedColumn } from "typeorm";
 
 

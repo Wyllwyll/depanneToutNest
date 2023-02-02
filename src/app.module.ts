@@ -5,6 +5,8 @@ import { TypeOrmModule } from '@nestjs/typeorm';
 import { ConfigModule } from '@nestjs/config';
 import { OrderModule } from './order/order.module';
 import { Order } from './order/entities/order.entity';
+import { User } from './users/entities/user.entity';
+import { UsersModule } from './users/users.module';
 
 
 @Module({
@@ -17,10 +19,11 @@ import { Order } from './order/entities/order.entity';
       username: process.env.DB_USERNAME,
       password: process.env.DB_PASSWORD,
       database: process.env.DB_NAME,
-      entities: [Order],
+      entities: [Order,User],
       synchronize: true,
     }),
     OrderModule,
+    UsersModule
 
 
   ],

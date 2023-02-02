@@ -1,4 +1,5 @@
 import { timestamp } from "rxjs";
+import { User } from "src/users/entities/user.entity";
 import { BaseEntity, Column, Entity, ManyToOne, OneToOne, PrimaryColumn } from "typeorm";
 
 
@@ -40,13 +41,13 @@ export class Order extends BaseEntity {
 
 
 
-    @ManyToOne(() => User, (user) => user.order, {
+    @ManyToOne(() => User, (user) => user.orders, {
         nullable: false
     })
     user: User
 
 
-    @OneToOne(() => Reservation, (reservation) => reservation.order,
+    @OneToOne(() => Reservation, (reservation) => reservation.orders,
         {
             nullable: false
         })
