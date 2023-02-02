@@ -6,48 +6,22 @@ import { User } from './entities/user.entity';
 export class UsersService {
   /**
    * Ajout d'un user
-   * param name  nom du user
-   * param hash  mot de pass hacher
-   * returns     Le nouveau user
    */
   async create(createUserDto: CreateUserDto) {
-    return await User.create(createUserDto).save();
+    const user = await User.create(createUserDto).save();
+    delete user.password ;
+    return user ;
   }
 
-  /**
-   * Récupération des info d'un users
-   * param userId    id du user
-   * returns         Le user avec ses commandes
-   */
-  /*
-  async findOneById(userId: number): Promise<User> {
-    
-    const user = await User.findOne({
-      relations: {
-        orders: {
-          lines: { menu: true },
-          resto: true,
-        },
-      },
-      where: {
-        id: userId,
-      },
-    });
-    
-    return user;
-  }*/
 
   /**
-   * Récupération d'un user par son nom **ATTENTION : contient le password**
-   * param name
-   * returns
+   * Récupération d'un user par son mail **ATTENTION : contient le password**
    */
 
   
   async findOneByMail(mail: string): Promise<User | null> {
     return await User.findOne({
       select: {
-        id: true,
         username: true,
         mail: true,
         password: true,
