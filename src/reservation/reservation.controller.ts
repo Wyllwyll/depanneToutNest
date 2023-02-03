@@ -5,16 +5,23 @@ import { UpdateReservationDto } from './dto/update-reservation.dto';
 
 @Controller('reservation')
 export class ReservationController {
-  constructor(private readonly reservationService: ReservationService) {}
+  constructor(private readonly reservationService: ReservationService) { }
 
-  @Post()
+
+  @Post("addreservation")
   create(@Body() createReservationDto: CreateReservationDto) {
     return this.reservationService.create(createReservationDto);
   }
 
-  @Get()
+
+  @Get("allreservationsforoneuser")
   findAll() {
-    return this.reservationService.findAll();
+    return this.reservationService.findAllReservation();
+  }
+}
+
+  /* findOne(@Body() id: string, updateOrderDto: UpdateOrderDto) {
+    return this.reservationService.findReservation(updateOrderDto);
   }
 
   @Get(':id')
@@ -32,3 +39,4 @@ export class ReservationController {
     return this.reservationService.remove(+id);
   }
 }
+ */
