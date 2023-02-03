@@ -1,29 +1,31 @@
 import {
   Controller,
-  Get,
   Post,
   Body,
-  Param,
   UsePipes,
   ValidationPipe,
   ConflictException,
-  UnauthorizedException,
-  Bind,
-  ParseIntPipe,
+  Request,
+  Get,
+  UseGuards,
 } from '@nestjs/common';
 import { ConfigModule } from '@nestjs/config';
 import { UsersService } from './users.service';
 import { CreateUserDto } from './dto/create-user.dto';
 import * as bcrypt from 'bcrypt';
-import * as jwt from 'jsonwebtoken'; // token
-import { LoginUserDto } from './dto/login-user.dto';
+import { AuthService } from 'src/auth/auth.service';
+import { JwtAuthGuard } from 'src/auth/jwt-auth.guard';
+
 
 ConfigModule.forRoot()
 const accessTokenSecret = process.env.SECRET_TOKEN!; // token
 
 @Controller('users')
 export class UsersController {
-  constructor(private readonly usersService: UsersService) {}
+  constructor(
+    private readonly usersService: UsersService,
+    private authService: AuthService
+    ) {}
 
   @Post('register')
   @UsePipes(new ValidationPipe({ transform: true }))
@@ -48,49 +50,17 @@ export class UsersController {
     };
   }
 
-  /** Authentification d'un User, fourni le token */
-  
+  // @UseGuards(LocalAuthGuard)
   @Post('login')
   @UsePipes(new ValidationPipe({ transform: true }))
-  async login(@Body() loginUserDto: LoginUserDto) {
-    const data = await this.usersService.findOneByMail(loginUserDto.mail);
-
-    if (!data) {
-      throw new UnauthorizedException("Mail ou mot de passe incorrecte");
-    }
-    const isOk = await bcrypt.compare( loginUserDto.password, data.password);
-
-    if (!isOk) {
-      throw new UnauthorizedException("Mail ou mot de passe incorrecte");
-    }
-
-    const token = {
-      id: data.id
-    };
-
-    return {
-      statusCode: 200,
-      message: [`Connection de ${data.username}`],
-      succes: 'OK',
-      data: {
-        username: data.username,
-        mail: data.mail,
-        token: jwt.sign(token, accessTokenSecret!),
-      },
-    };
+  async login(@Request() req) {
+    const user = await this.usersService.findOneByMail(req.body.mail)
+    return this.authService.login(user);
   }
 
-/*
-  @Get(':id')
-  @Bind(Param('id', new ParseIntPipe()))
-  findOne(id: string) {
-    return this.usersService.findOneById(+id);
+  @Get()
+  @UseGuards(JwtAuthGuard)
+  async test(@Request() req){
+    console.log(req.user);
   }
-  */
-  /*
-  @Patch(':id')
-  update(@Param('id') id: string, @Body() updateUserDto: UpdateUserDto) {
-    return this.usersService.update(+id, updateUserDto);
-  }
-*/
 }
