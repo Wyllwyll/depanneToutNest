@@ -38,9 +38,14 @@ export class OrderService {
     return order;
   }
 
+  async findOne(orderId : number) {
+    const order = await Order.findOne({where :{ id : orderId },relations :{user : true}})
+    return order;
+  }
 
-  async updateOrder(userId: number, updateOrderDto: UpdateOrderDto) {
-    const updateOrder = await Order.findOneBy({ id: userId });
+
+  async updateOrder(orderId: number, updateOrderDto: UpdateOrderDto) {
+    const updateOrder = await Order.findOneBy({ id: orderId });
     updateOrder.name = updateOrderDto.name
     updateOrder.city = updateOrderDto.city
     updateOrder.price = updateOrderDto.price

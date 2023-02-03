@@ -1,36 +1,58 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete } from '@nestjs/common';
+import { Controller, Get, Post, Body, Patch, NotFoundException, BadRequestException } from '@nestjs/common';
 import { OrderService } from './order.service';
 import { CreateOrderDto } from './dto/create-order.dto';
 import { UpdateOrderDto } from './dto/update-order.dto';
 
-@Controller('order')
+@Controller('/order')
 export class OrderController {
-  constructor(private readonly orderService: OrderService) {}
+  constructor(private readonly orderService: OrderService) { }
 
 
-  @Post("addorder")
-  create(@Body() createOrderDto: CreateOrderDto) {
-    return this.orderService.createOrder(createOrderDto);
+  @Post("/addorder")
+  async create(@Body() createOrderDto: CreateOrderDto) {
+    const data = await this.orderService.createOrder(createOrderDto)
+    if (!createOrderDto) {
+      throw new BadRequestException('informations manquantes')
+    }
+    else {
+      return data
+    }
+
   }
 
 
 
-  @Get("getallorder")
-  findAll() {
-    return this.orderService.findAllOrder();
+  @Get("/getAllOrder")
+  async findAll() {
+    const data = this.orderService.findAllOrder();
+    return data
   }
 
 
 
-  @Get('nameorder')
-  findOne(@Body() updateOrderDto: UpdateOrderDto) {
-    return this.orderService.findOrder(updateOrderDto);
+  @Get('/nameOrder')
+  async findOne(@Body() updateOrderDto: UpdateOrderDto) {
+    const data = await this.orderService.findOrder(updateOrderDto)
+
+    if (!data) {
+      throw new NotFoundException("le nom ne correspond à aucun order")
+    }
+    return data
   }
 
 
-  
-  @Delete(':id')
-  remove(@Param('id') id: string) {
-    return this.orderService.ifReserved(+id);
+
+  @Patch('/updateOrder')
+  async findOrderUpdate(@Body() updateOrderDto: UpdateOrderDto) {
+    const data = await this.orderService.findOne(updateOrderDto.id)
+
+    if (!data) {
+      throw new NotFoundException("l'ID' ne correspond à aucun order")
+    }
+    if (!updateOrderDto) {
+      throw new NotFoundException("champs manquants")
+    }
+    return await this.orderService.updateOrder(data.user.id, updateOrderDto)
   }
+
 }
