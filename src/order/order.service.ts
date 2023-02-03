@@ -28,18 +28,33 @@ export class OrderService {
 
 
   async findAllOrder() {
-    const order = await Order.find()
+    const order = await Order.find({
+      relations: { user: true },
+      select: { user: { username: true } },
+      where: { reserved: false }
+    })
     return order;
+
   }
 
 
   async findOrder(updateOrderDto: UpdateOrderDto) {
-    const order = await Order.findBy({ name: Like(updateOrderDto.name) })
+    const order = await Order.find({
+      relations: { user: true },
+      select: { user: { username: true } },
+      where: { name: Like(`%${updateOrderDto.name}%`), reserved: false }
+    })
     return order;
   }
 
-  async findOne(orderId : number) {
-    const order = await Order.findOne({where :{ id : orderId },relations :{user : true}})
+
+
+  async findOne(orderId: number) {
+    const order = await Order.findOne({
+      where: { id: orderId, reserved: false },
+      relations: { user: true }
+
+    })
     return order;
   }
 

@@ -17,7 +17,6 @@ export class OrderController {
     else {
       return data
     }
-
   }
 
 
@@ -42,6 +41,7 @@ export class OrderController {
 
 
 
+
   @Patch('/updateOrder')
   async findOrderUpdate(@Body() updateOrderDto: UpdateOrderDto) {
     const data = await this.orderService.findOne(updateOrderDto.id)
@@ -49,10 +49,8 @@ export class OrderController {
     if (!data) {
       throw new NotFoundException("l'ID' ne correspond à aucun order")
     }
-    if (!updateOrderDto) {
-      throw new NotFoundException("champs manquants")
-    }
     return await this.orderService.updateOrder(data.user.id, updateOrderDto)
   }
-
 }
+
+
