@@ -7,10 +7,10 @@ import { OrderModule } from './order/order.module';
 import { Order } from './order/entities/order.entity';
 import { User } from './users/entities/user.entity';
 import { UsersModule } from './users/users.module';
-import { ReservationModule } from './reservation/reservation.module';
 import { Reservation } from './reservation/entities/reservation.entity';
 import { AuthModule } from './auth/auth.module';
 import 'reflect-metadata'
+import { ReservationModule } from './reservation/reservation.module';
 
 
 @Module({

@@ -1,16 +1,27 @@
-import { Controller, Get, Post, Body, Patch, NotFoundException, BadRequestException } from '@nestjs/common';
+import { Controller, Get, Post, Body, Patch, NotFoundException, BadRequestException, Request, UseGuards } from '@nestjs/common';
 import { OrderService } from './order.service';
 import { CreateOrderDto } from './dto/create-order.dto';
 import { UpdateOrderDto } from './dto/update-order.dto';
+import { JwtAuthGuard } from 'src/auth/jwt-auth.guard';
+import { User } from 'src/users/entities/user.entity';
+import { UsersService } from 'src/users/users.service';
+import { FindNameOrderDto } from './dto/findName-order.dto';
 
-@Controller('/order')
+@Controller('order')
 export class OrderController {
-  constructor(private readonly orderService: OrderService) { }
+  constructor(
+    private readonly orderService: OrderService,
+    private readonly usersService: UsersService
+    ) { }
 
+  @UseGuards(JwtAuthGuard)
+  @Post("addorder") 
+  async create(@Body() createOrderDto: CreateOrderDto, @Request() req) {
+    //console.log('test', req.user);
+    
+    const user : User = await this.usersService.findOneById(req.user.userId);
+    const data = await this.orderService.createOrder(createOrderDto,user)
 
-  @Post("/addorder")
-  async create(@Body() createOrderDto: CreateOrderDto) {
-    const data = await this.orderService.createOrder(createOrderDto)
     if (!createOrderDto) {
       throw new BadRequestException('informations manquantes')
     }
@@ -21,7 +32,7 @@ export class OrderController {
 
 
 
-  @Get("/getAllOrder")
+  @Get("getAllOrder")
   async findAll() {
     const data = this.orderService.findAllOrder();
     return data
@@ -29,9 +40,9 @@ export class OrderController {
 
 
 
-  @Get('/nameOrder')
-  async findOne(@Body() updateOrderDto: UpdateOrderDto) {
-    const data = await this.orderService.findOrder(updateOrderDto)
+  @Get('nameOrder')
+  async findOne(@Body() FindNameOrderDto: FindNameOrderDto) {
+    const data = await this.orderService.findOrder(FindNameOrderDto)
 
     if (!data) {
       throw new NotFoundException("le nom ne correspond à aucun order")
@@ -42,7 +53,7 @@ export class OrderController {
 
 
 
-  @Patch('/updateOrder')
+  @Patch('updateOrder')
   async findOrderUpdate(@Body() updateOrderDto: UpdateOrderDto) {
     const data = await this.orderService.findOne(updateOrderDto.id)
 

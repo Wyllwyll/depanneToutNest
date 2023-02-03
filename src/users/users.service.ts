@@ -32,6 +32,11 @@ export class UsersService {
       },
     });
   }
+
+  
+  async findOneById(id: number): Promise<User | null> {
+    return await User.findOneBy( { id: id });
+  }
   
  /*
   async update(userId: number, adminLvl: number): Promise<User | null> {

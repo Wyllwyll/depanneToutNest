@@ -1,4 +1,4 @@
-import { IsBoolean, IsDate, IsInt, IsNotEmpty } from "class-validator";
+import { IsBoolean, IsDate, IsDateString, IsInt, IsNotEmpty } from "class-validator";
 
 export class CreateOrderDto {
 
@@ -15,19 +15,11 @@ export class CreateOrderDto {
     city: string
 
 
-    @IsDate()
+    @IsDateString()
     start_time: Date
 
 
-    @IsDate()
+    @IsDateString()
     end_time: Date
-
-
-    @IsBoolean()
-    reserved: boolean
-
-
-    @IsInt()
-    ownerId:number
 
 }

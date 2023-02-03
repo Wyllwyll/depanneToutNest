@@ -2,6 +2,7 @@ import { Injectable } from '@nestjs/common';
 import { User } from 'src/users/entities/user.entity';
 import { Like } from 'typeorm';
 import { CreateOrderDto } from './dto/create-order.dto';
+import { FindNameOrderDto } from './dto/findName-order.dto';
 import { UpdateOrderDto } from './dto/update-order.dto';
 import { Order } from './entities/order.entity';
 
@@ -9,7 +10,7 @@ import { Order } from './entities/order.entity';
 export class OrderService {
 
 
-  async createOrder(createOrderDto: CreateOrderDto) {
+  async createOrder(createOrderDto: CreateOrderDto, user:User) {
 
     const newOrder = Order.create({
       name: createOrderDto.name,
@@ -17,10 +18,9 @@ export class OrderService {
       city: createOrderDto.city,
       start_time: createOrderDto.start_time,
       end_time: createOrderDto.end_time,
-      reserved: createOrderDto.reserved,
-      user: await User.findOneBy({ id: createOrderDto.ownerId })
-
+      user: user
     })
+
     const order = await Order.save(newOrder)
     return order;
 
@@ -38,11 +38,11 @@ export class OrderService {
   }
 
 
-  async findOrder(updateOrderDto: UpdateOrderDto) {
+  async findOrder(FindNameOrderDto:FindNameOrderDto) {
     const order = await Order.find({
       relations: { user: true },
       select: { user: { username: true } },
-      where: { name: Like(`%${updateOrderDto.name}%`), reserved: false }
+      where: { name: Like(`%${FindNameOrderDto.name}%`), reserved: false }
     })
     return order;
   }
