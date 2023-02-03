@@ -22,6 +22,7 @@ export class UsersService {
   async findOneByMail(mail: string): Promise<User | null> {
     return await User.findOne({
       select: {
+        id: true,
         username: true,
         mail: true,
         password: true,
