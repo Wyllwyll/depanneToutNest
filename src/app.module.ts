@@ -9,6 +9,7 @@ import { User } from './users/entities/user.entity';
 import { UsersModule } from './users/users.module';
 import { ReservationModule } from './reservation/reservation.module';
 import { Reservation } from './reservation/entities/reservation.entity';
+import { AuthModule } from './auth/auth.module';
 import 'reflect-metadata'
 
 
@@ -27,9 +28,8 @@ import 'reflect-metadata'
     }),
     OrderModule,
     UsersModule,
-    ReservationModule
-
-
+    ReservationModule,
+    AuthModule
   ],
 
   controllers: [AppController],
