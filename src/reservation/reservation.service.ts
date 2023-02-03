@@ -6,8 +6,8 @@ import { CreateReservationDto } from './dto/create-reservation.dto';
 import { UpdateReservationDto } from './dto/update-reservation.dto';
 import { Reservation } from './entities/reservation.entity';
 
-@Injectable()
-export class ReservationService {
+//@Injectable()
+/* export class ReservationService {
   
     async create(createReservationDto: CreateReservationDto) {
       const newReservation = new Reservation();
@@ -22,7 +22,7 @@ export class ReservationService {
    findAllReservation() {
     const reservation = await Reservation.find()
     return reservation;
-  }
+  } */
 
 
 /* function findAllReservation() {

@@ -17,8 +17,7 @@ export class OrderService {
       city: createOrderDto.city,
       start_time: createOrderDto.start_time,
       end_time: createOrderDto.end_time,
-      reserved: createOrderDto.reserved,
-      user: await User.findOneBy({ id: createOrderDto.ownerId })
+     // user: await User.findOneBy({ id: createOrderDto.ownerId })
 
     })
     const order = await Order.save(newOrder)

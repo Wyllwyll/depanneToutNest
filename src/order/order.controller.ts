@@ -3,12 +3,12 @@ import { OrderService } from './order.service';
 import { CreateOrderDto } from './dto/create-order.dto';
 import { UpdateOrderDto } from './dto/update-order.dto';
 
-@Controller('/order')
+@Controller('order')
 export class OrderController {
   constructor(private readonly orderService: OrderService) { }
 
 
-  @Post("/addorder")
+  @Post("addorder")
   async create(@Body() createOrderDto: CreateOrderDto) {
     const data = await this.orderService.createOrder(createOrderDto)
     if (!createOrderDto) {
@@ -21,7 +21,7 @@ export class OrderController {
 
 
 
-  @Get("/getAllOrder")
+  @Get("getAllOrder")
   async findAll() {
     const data = this.orderService.findAllOrder();
     return data
@@ -29,7 +29,7 @@ export class OrderController {
 
 
 
-  @Get('/nameOrder')
+  @Get('nameOrder')
   async findOne(@Body() updateOrderDto: UpdateOrderDto) {
     const data = await this.orderService.findOrder(updateOrderDto)
 
@@ -42,7 +42,7 @@ export class OrderController {
 
 
 
-  @Patch('/updateOrder')
+  @Patch('updateOrder')
   async findOrderUpdate(@Body() updateOrderDto: UpdateOrderDto) {
     const data = await this.orderService.findOne(updateOrderDto.id)
 

@@ -22,12 +22,4 @@ export class CreateOrderDto {
     @IsDate()
     end_time: Date
 
-
-    @IsBoolean()
-    reserved: boolean
-
-
-    @IsInt()
-    ownerId:number
-
 }
