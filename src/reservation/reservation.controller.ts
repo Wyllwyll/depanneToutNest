@@ -1,4 +1,4 @@
-import { Controller, Get, Post, Body } from '@nestjs/common';
+import { Controller, Get, Post, Body, ConflictException } from '@nestjs/common';
 import { ReservationService } from './reservation.service';
 import { CreateReservationDto } from './dto/create-reservation.dto';
 import { FindAllReservationDto } from './dto/findall-reservation.dto';
@@ -8,8 +8,6 @@ import { FindOneReservationDto } from './dto/find-reservation.dto';
 export class ReservationController {
   constructor(private readonly reservationService: ReservationService) { }
 
-
-
   @Post("add")
   create(@Body() createReservationDto: CreateReservationDto) {
     return this.reservationService.create(createReservationDto);
@@ -17,40 +15,24 @@ export class ReservationController {
 
 
   @Get("forUser")
-  findAll(@Body() findAllReservationDto: FindAllReservationDto) {
-    console.log(findAllReservationDto);
+  async findAll(@Body() findAllReservationDto: FindAllReservationDto) {
+  
+    const user = await this.reservationService.findAllReservation();
 
+    if (!user) {
+      throw new ConflictException("Cet utilisateur n'existe pas.");
+    }
     return this.reservationService.findAllReservation();
   }
 
   @Get("orderId")
-  findOne(@Body() findonereservationDto: FindOneReservationDto) {
-    return this.reservationService.findOneReservation(findonereservationDto);
+  async findOne(@Body() findOneReservationDto: FindOneReservationDto) {
+
+    const order = await this.reservationService.findOneReservation(findOneReservationDto);
+
+    if (!order) {
+      throw new ConflictException("Cette réservation n'existe pas.");
+    }
+    return this.reservationService.findOneReservation(findOneReservationDto);
   }
-/*
-  try {
-  const resa = reservationService.findOneReservation(userId, orderId);
-
-  if (!resa) {
-    return res.status(404).json({
-      status: EStatus.FAILED,
-      message:'La reservation demandée n existe pas, veuillez changer svp.',
-      data: null,
-    } as TApiResponse);
-  }
-
-  res.status(200).json({
-    status: EStatus.OK,
-    message: 'Votre reservation est la suivante:',
-    data: resa.raw,
-  } as TApiResponse);
-} catch (err) {
-  console.log(err);
-
-  return res.status(500).json({
-    status: EStatus.FAILED,
-    message: 'Erreur serveur.',
-    data: null,
-  } as TApiResponse);
-  */
 } 

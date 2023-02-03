@@ -18,8 +18,8 @@ export class ReservationService {
   }
 
   async findAllReservation() {
-    const reservation = await Reservation.find()
-    return reservation;
+    const reservations = await Reservation.find()
+    return reservations;
   }
 
   async findOneReservation(findOneReservationDto: FindOneReservationDto) {
