@@ -9,17 +9,13 @@ import {
   Get,
   UseGuards,
 } from '@nestjs/common';
-import { ConfigModule } from '@nestjs/config';
 import { UsersService } from './users.service';
 import { CreateUserDto } from './dto/create-user.dto';
 import * as bcrypt from 'bcrypt';
 import { AuthService } from 'src/auth/auth.service';
-import { JwtAuthGuard } from 'src/auth/jwt-auth.guard';
 import { NotFoundException } from '@nestjs/common/exceptions';
 
 
-ConfigModule.forRoot()
-const accessTokenSecret = process.env.SECRET_TOKEN!; // token
 
 @Controller('users')
 export class UsersController {
@@ -51,7 +47,6 @@ export class UsersController {
     };
   }
 
-  // @UseGuards(LocalAuthGuard)
   @Post('login')
   @UsePipes(new ValidationPipe({ transform: true }))
   async login(@Request() req) {
