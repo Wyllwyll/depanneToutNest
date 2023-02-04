@@ -1,73 +1,59 @@
-<p align="center">
-  <a href="http://nestjs.com/" target="blank"><img src="https://nestjs.com/img/logo-small.svg" width="200" alt="Nest Logo" /></a>
-</p>
+# DepanneTout
 
-[circleci-image]: https://img.shields.io/circleci/build/github/nestjs/nest/master?token=abc123def456
-[circleci-url]: https://circleci.com/gh/nestjs/nest
+## Brief
 
-  <p align="center">A progressive <a href="http://nodejs.org" target="_blank">Node.js</a> framework for building efficient and scalable server-side applications.</p>
-    <p align="center">
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/v/@nestjs/core.svg" alt="NPM Version" /></a>
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/l/@nestjs/core.svg" alt="Package License" /></a>
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/dm/@nestjs/common.svg" alt="NPM Downloads" /></a>
-<a href="https://circleci.com/gh/nestjs/nest" target="_blank"><img src="https://img.shields.io/circleci/build/github/nestjs/nest/master" alt="CircleCI" /></a>
-<a href="https://coveralls.io/github/nestjs/nest?branch=master" target="_blank"><img src="https://coveralls.io/repos/github/nestjs/nest/badge.svg?branch=master#9" alt="Coverage" /></a>
-<a href="https://discord.gg/G7Qnnhy" target="_blank"><img src="https://img.shields.io/badge/discord-online-brightgreen.svg" alt="Discord"/></a>
-<a href="https://opencollective.com/nest#backer" target="_blank"><img src="https://opencollective.com/nest/backers/badge.svg" alt="Backers on Open Collective" /></a>
-<a href="https://opencollective.com/nest#sponsor" target="_blank"><img src="https://opencollective.com/nest/sponsors/badge.svg" alt="Sponsors on Open Collective" /></a>
-  <a href="https://paypal.me/kamilmysliwiec" target="_blank"><img src="https://img.shields.io/badge/Donate-PayPal-ff3f59.svg"/></a>
-    <a href="https://opencollective.com/nest#sponsor"  target="_blank"><img src="https://img.shields.io/badge/Support%20us-Open%20Collective-41B883.svg" alt="Support us"></a>
-  <a href="https://twitter.com/nestframework" target="_blank"><img src="https://img.shields.io/twitter/follow/nestframework.svg?style=social&label=Follow"></a>
-</p>
-  <!--[![Backers on Open Collective](https://opencollective.com/nest/backers/badge.svg)](https://opencollective.com/nest#backer)
-  [![Sponsors on Open Collective](https://opencollective.com/nest/sponsors/badge.svg)](https://opencollective.com/nest#sponsor)-->
+### Contexte du projet
 
-## Description
+Une association d'animation de voisinage, vous demande de réaliser une plateforme de réservation afin que chaque utilisateur puisse :
 
-[Nest](https://github.com/nestjs/nest) framework TypeScript starter repository.
+* proposer un service
+* réserver un ou plusieurs services.
+* rechercher un service par mot clés sur le nom.
 
-## Installation
+L'hautentification est gérée à l'aide de JWT. Un utilisateur ne peux pas réserver son propre service.
 
-```bash
-$ npm install
-```
+A l'inscription, l'utilisateur doit obligatoirement fournir:
 
-## Running the app
+* un nom d'utilisateur
+* un email
+* un mot de passe
+* une confirmation de mot de passe
+* son adresse postale
 
-```bash
-# development
-$ npm run start
+Un service doit comporter les informations suivantes:
 
-# watch mode
-$ npm run start:dev
+* Le nom de l'utilisateur qui propose le service
+* Le nom du service proposé
+* Le tarif proposé
+* La ville
+* L'horaire de début et de fin
 
-# production mode
-$ npm run start:prod
-```
+**BONUS**: Afficher la durée du service en plus des horaires.
 
-## Test
+**BONUS 2**: Créer l'interface utilisateur à l'aide de React.
 
-```bash
-# unit tests
-$ npm run test
+### Modalités pédagogiques
 
-# e2e tests
-$ npm run test:e2e
+Vous réaliserez ce projet en binôme
 
-# test coverage
-$ npm run test:cov
-```
+### Critères de performance
 
-## Support
+* Le mot de passe est hasché ..................................................... OK
+* L'utilisation de JWT est fonctionelle .......................................... OK
+* Les verbes HTTP sont correctement utilisés ..................................... OK
+* Il est possible de publier un service .......................................... OK
+* Il est possible d'éditer un service par l'utilisateur qui l'a créer ............ En Cours
+* Il est possible de supprimer un service par l'utilisateur qui l'a créer ........ A faire
+* Il est possible de rechercher un service par nom ............................... OK
+* Il est possible de réserver un service d'un autre utilisateur .................. OK
+* Une fois réservé, le service n'est plus proposé en recherche ................... OK
+* Le code est indenté et documenté ............................................... A faire
 
-Nest is an MIT-licensed open source project. It can grow thanks to the sponsors and support by the amazing backers. If you'd like to join them, please [read more here](https://docs.nestjs.com/support).
+### Modalités d'évaluation
 
-## Stay in touch
+Évaluation avec le formateur
+NOTE: N'hésitez pas à aborder vos difficultés à chaud lors du rendu sur Simplonline, afin que nous les abordions lors de la revue de code.
 
-- Author - [Kamil Myśliwiec](https://kamilmysliwiec.com)
-- Website - [https://nestjs.com](https://nestjs.com/)
-- Twitter - [@nestframework](https://twitter.com/nestframework)
+### Livrables
 
-## License
-
-Nest is [MIT licensed](LICENSE).
+Depot github avec commits réguliers

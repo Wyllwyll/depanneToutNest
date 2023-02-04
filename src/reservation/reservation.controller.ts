@@ -14,6 +14,10 @@ export class ReservationController {
     private readonly ordersService: OrderService
   ) { }
 
+
+  /**
+   * Celui-ci me semble Ok
+   */
   @UseGuards(JwtAuthGuard)
   @Post()
   async create(@Body() createReservationDto: CreateReservationDto, @Request() req) {
@@ -29,18 +33,22 @@ export class ReservationController {
     return this.reservationService.create(userId, orderId);
   }
 
-
+  /**
+   * A faire :
+   * Crée et utilisé la methode : findUserReservation DANS LE SERVICE !
+   */
+  @UseGuards(JwtAuthGuard)
   @Get("forUser")
-  async findAll(@Body() findAllReservationDto: FindAllReservationDto) {
+  async findAll(@Request() req) {
+    const userId = req.user.id ;
+    return await this.reservationService.findUserReservation(userId)
 
-    const user = await this.reservationService.findAllReservation();
-
-    if (!user) {
-      throw new NotFoundException("Cet utilisateur n'existe pas.");
-    }
-    return this.reservationService.findAllReservation();
   }
 
+  /**
+   * Pas Besoin !
+   */
+  /*
   @Get("orderId")
   async findOne(@Body() findOneReservationDto: FindOneReservationDto) {
 
@@ -50,5 +58,5 @@ export class ReservationController {
       throw new NotFoundException("Cette réservation n'existe pas.");
     }
     return this.reservationService.findOneReservation(findOneReservationDto);
-  }
+  }*/
 } 

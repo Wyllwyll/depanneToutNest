@@ -23,15 +23,32 @@ export class ReservationService {
 
   }
 
+  /**
+   * A faire :
+   * La fonction doit retourner la liste des Resa correspondant au userId
+   */
+  async findUserReservation(userId : number){
+    
+  }
+
+
+
+
+  /**
+   * Pas Besoin
+   */
+  /*
   async findAllReservation() {
     const reservations = await Reservation.find()
     return reservations;
   }
-  
+  */
 
+  /*
   async findOneReservation(findOneReservationDto: FindOneReservationDto) {
     return await Reservation.findOneBy({ order: { id: findOneReservationDto.orderId } });
   }
+  */
 }
 
 /**

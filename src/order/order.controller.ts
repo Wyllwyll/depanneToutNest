@@ -67,6 +67,7 @@ export class OrderController {
   async findOrderUpdate(@Body() updateOrderDto: UpdateOrderDto) {
     const data = await this.orderService.findOne(updateOrderDto.id)
     
+    // Vérifier si le l'order appartient bien au user du token
     console.log(data);
     
     if (!data) {
