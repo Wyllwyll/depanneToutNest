@@ -47,7 +47,7 @@ export class Order extends BaseEntity {
     user: User
 
 
-    @OneToOne(() => Reservation, (reservation) => reservation.order,)
+    @OneToOne(() => Reservation)
     reservation: Reservation
 
 

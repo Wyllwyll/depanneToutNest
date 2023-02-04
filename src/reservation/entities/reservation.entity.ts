@@ -1,7 +1,7 @@
 import{Entity,
     Column,
     PrimaryGeneratedColumn, ManyToOne,
-    OneToOne,BaseEntity
+    OneToOne,BaseEntity, JoinColumn
 } from 'typeorm'
 import { User } from "src/users/entities/user.entity";
 import { Order } from "src/order/entities/order.entity";
@@ -16,13 +16,11 @@ export class Reservation extends BaseEntity {
     @Column({unique:true})
     numero: number;
 
-    @ManyToOne(() => User, (user) => user.id, {eager: true})
+    @ManyToOne(() => User, (user) => user.reservations, {eager: true})
     user : User;
 
-    @OneToOne(() => Order, (order) => order.reservation,
-        {
-            nullable: false
-        })
+    @OneToOne(() => Order, {  nullable: false  })
+    @JoinColumn()
     order: Order
 
 

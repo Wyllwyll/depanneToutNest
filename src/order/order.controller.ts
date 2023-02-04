@@ -7,15 +7,20 @@ import { User } from 'src/users/entities/user.entity';
 import { UsersService } from 'src/users/users.service';
 import { FindNameOrderDto } from './dto/findName-order.dto';
 
-@Controller('order')
+@Controller('orders')
 export class OrderController {
   constructor(
     private readonly orderService: OrderService,
     private readonly usersService: UsersService
     ) { }
 
+
+  /** Possibles verif supplémentaires : 
+   * * start < end
+   * * pas de superposition des dates
+  */
   @UseGuards(JwtAuthGuard)
-  @Post("addorder") 
+  @Post()         // Suppression de "addOrder" dans la route
   async create(@Body() createOrderDto: CreateOrderDto, @Request() req) {
     //console.log('test', req.user);
     
@@ -32,15 +37,17 @@ export class OrderController {
 
 
 
-  @Get("getAllOrder")
+  @Get()              // Suppression de "getAllOrder" dans la route
   async findAll() {
     const data = this.orderService.findAllOrder();
     return data
   }
 
 
-
-  @Get('nameOrder')
+  /** Possibles verif supplémentaires : 
+   * * Faire la vérif en minuscule .toLowerCase()
+   */
+  @Get('byName')
   async findOne(@Body() FindNameOrderDto: FindNameOrderDto) {
     const data = await this.orderService.findOrder(FindNameOrderDto)
 
@@ -52,8 +59,11 @@ export class OrderController {
 
 
 
-
-  @Patch('updateOrder')
+  /** Possibles verif supplémentaires : 
+   * * Ajouter l'AuthGuard
+   * * Rendre optionnels certain parametre de la DTO, et modifier le service en consequence
+   */
+  @Patch()              // Suppression de "updateOrder" dans la route
   async findOrderUpdate(@Body() updateOrderDto: UpdateOrderDto) {
     const data = await this.orderService.findOne(updateOrderDto.id)
 

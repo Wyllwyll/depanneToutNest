@@ -8,10 +8,16 @@ import { Reservation } from './entities/reservation.entity';
 @Injectable()
 export class ReservationService {
 
-  async create(createReservationDto: CreateReservationDto) {
-    const newReservation = new Reservation();
-    newReservation.user = await User.findOneBy({ id: createReservationDto.userId })//createReservationDto.id;
-    newReservation.order = await Order.findOneBy({ id: createReservationDto.order })
+  async create(userId : number, orderId : number) {
+    console.log(userId, orderId );
+    
+    let newReservation = new Reservation();
+    //newReservation.user = await User.findOneBy({ id: userId })//createReservationDto.id;
+    //newReservation.order = await Order.findOneBy({ id: orderId })
+    newReservation.numero = 1
+    await newReservation.save()
+    console.log(newReservation.id);
+    
     newReservation.numero = newReservation.id + 10
     return await newReservation.save();
 

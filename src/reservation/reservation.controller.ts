@@ -1,16 +1,18 @@
-import { Controller, Get, Post, Body, ConflictException } from '@nestjs/common';
+import { Controller, Get, Post, Body, ConflictException, UseGuards, Request } from '@nestjs/common';
 import { ReservationService } from './reservation.service';
 import { CreateReservationDto } from './dto/create-reservation.dto';
 import { FindAllReservationDto } from './dto/findall-reservation.dto';
 import { FindOneReservationDto } from './dto/find-reservation.dto';
+import { JwtAuthGuard } from 'src/auth/jwt-auth.guard';
 
 @Controller('reservations')
 export class ReservationController {
   constructor(private readonly reservationService: ReservationService) { }
 
-  @Post("add")
-  create(@Body() createReservationDto: CreateReservationDto) {
-    return this.reservationService.create(createReservationDto);
+  @UseGuards(JwtAuthGuard)
+  @Post()
+  create(@Body() createReservationDto: CreateReservationDto, @Request() req) {
+    return this.reservationService.create(req.user.userId,createReservationDto.orderId);
   }
 
 

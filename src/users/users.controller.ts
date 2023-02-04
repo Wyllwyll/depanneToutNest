@@ -15,6 +15,7 @@ import { CreateUserDto } from './dto/create-user.dto';
 import * as bcrypt from 'bcrypt';
 import { AuthService } from 'src/auth/auth.service';
 import { JwtAuthGuard } from 'src/auth/jwt-auth.guard';
+import { NotFoundException } from '@nestjs/common/exceptions';
 
 
 ConfigModule.forRoot()
@@ -55,12 +56,10 @@ export class UsersController {
   @UsePipes(new ValidationPipe({ transform: true }))
   async login(@Request() req) {
     const user = await this.usersService.findOneByMail(req.body.mail)
+    if (!user){
+      throw new NotFoundException("Ce user n'existe pas")
+    }
     return this.authService.login(user);
   }
 
-  @Get()
-  @UseGuards(JwtAuthGuard)
-  async test(@Request() req){
-    console.log(req.user);
-  }
 }

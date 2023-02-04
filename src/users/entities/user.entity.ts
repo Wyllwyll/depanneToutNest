@@ -1,4 +1,5 @@
 import { Order } from "src/order/entities/order.entity";
+import { Reservation } from "src/reservation/entities/reservation.entity";
 import { BaseEntity, Column, Entity, OneToMany, PrimaryGeneratedColumn } from "typeorm";
 
 
@@ -40,6 +41,9 @@ export class User extends BaseEntity {
 
     @OneToMany(() => Order, (order) => order.user)
     orders : Order[]
+
+    @OneToMany(() => Reservation, (resa) => resa.user)
+    reservations : Reservation[]
 
 
 
