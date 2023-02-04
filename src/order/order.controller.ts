@@ -44,12 +44,11 @@ export class OrderController {
   }
 
 
-  /** Possibles verif supplémentaires : 
-   * * Faire la vérif en minuscule .toLowerCase()
-   */
+
   @Get('byName')
   async findOne(@Body() FindNameOrderDto: FindNameOrderDto) {
-    const data = await this.orderService.findOrder(FindNameOrderDto)
+    const data = await this.orderService.findOrder(FindNameOrderDto);
+
 
     if (!data) {
       throw new NotFoundException("le nom ne correspond à aucun order")
@@ -61,16 +60,19 @@ export class OrderController {
 
   /** Possibles verif supplémentaires : 
    * * Ajouter l'AuthGuard
-   * * Rendre optionnels certain parametre de la DTO, et modifier le service en consequence
    */
+  @UseGuards(JwtAuthGuard)
   @Patch()              // Suppression de "updateOrder" dans la route
+  
   async findOrderUpdate(@Body() updateOrderDto: UpdateOrderDto) {
     const data = await this.orderService.findOne(updateOrderDto.id)
-
+    
+    console.log(data);
+    
     if (!data) {
       throw new NotFoundException("l'ID' ne correspond à aucun order")
     }
-    return await this.orderService.updateOrder(data.user.id, updateOrderDto)
+    return await this.orderService.updateOrder(data.id, updateOrderDto)
   }
 }
 
