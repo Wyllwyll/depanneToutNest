@@ -12,13 +12,13 @@ export class ReservationService {
     console.log(userId, orderId );
     
     let newReservation = new Reservation();
-    newReservation.user = await User.findOneBy({ id: userId })//createReservationDto.id;
-    newReservation.order = await Order.findOneBy({ id: orderId })
-    newReservation.numero = 1
-    await newReservation.save()
-    console.log(newReservation.id);
     
-    newReservation.numero = newReservation.id + 10
+    newReservation.user = await User.findOneBy({ id: userId })//createReservationDto.id;
+    const linkOrder = await Order.findOneBy({ id: orderId })
+    linkOrder.reserved = true
+    await linkOrder.save()
+    newReservation.order = linkOrder
+    newReservation.numero = orderId+10
     return await newReservation.save();
 
   }
