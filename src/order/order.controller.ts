@@ -44,12 +44,11 @@ export class OrderController {
   }
 
 
-  /** Possibles verif supplémentaires : 
-   * * Faire la vérif en minuscule .toLowerCase()
-   */
+
   @Get('byName')
   async findOne(@Body() FindNameOrderDto: FindNameOrderDto) {
-    const data = await this.orderService.findOrder(FindNameOrderDto)
+    const data = await this.orderService.findOrder(FindNameOrderDto);
+
 
     if (!data) {
       throw new NotFoundException("le nom ne correspond à aucun order")

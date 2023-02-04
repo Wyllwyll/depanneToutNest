@@ -13,7 +13,7 @@ export class OrderService {
   async createOrder(createOrderDto: CreateOrderDto, user:User) {
 
     const newOrder = Order.create({
-      name: createOrderDto.name,
+      name: createOrderDto.name.toLowerCase(),
       price: createOrderDto.price,
       city: createOrderDto.city,
       start_time: createOrderDto.start_time,
@@ -42,7 +42,8 @@ export class OrderService {
     const order = await Order.find({
       relations: { user: true },
       select: { user: { username: true } },
-      where: { name: Like(`%${FindNameOrderDto.name}%`), reserved: false }
+      where: {  name: Like(`%${FindNameOrderDto.name.toLowerCase()}%`), reserved: false }
+      
     })
     return order;
   }
@@ -61,7 +62,7 @@ export class OrderService {
 
   async updateOrder(orderId: number, updateOrderDto: UpdateOrderDto) {
     const updateOrder = await Order.findOneBy({ id: orderId });
-    updateOrder.name = updateOrderDto.name
+    updateOrder.name = updateOrderDto.name.toLowerCase()
     updateOrder.city = updateOrderDto.city
     updateOrder.price = updateOrderDto.price
     updateOrder.start_time = updateOrderDto.start_time
