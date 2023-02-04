@@ -12,8 +12,8 @@ export class ReservationService {
     console.log(userId, orderId );
     
     let newReservation = new Reservation();
-    //newReservation.user = await User.findOneBy({ id: userId })//createReservationDto.id;
-    //newReservation.order = await Order.findOneBy({ id: orderId })
+    newReservation.user = await User.findOneBy({ id: userId })//createReservationDto.id;
+    newReservation.order = await Order.findOneBy({ id: orderId })
     newReservation.numero = 1
     await newReservation.save()
     console.log(newReservation.id);
