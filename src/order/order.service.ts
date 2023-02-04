@@ -10,7 +10,7 @@ import { Order } from './entities/order.entity';
 export class OrderService {
 
 
-  async createOrder(createOrderDto: CreateOrderDto, user:User) {
+  async createOrder(createOrderDto: CreateOrderDto, user: User) {
 
     const newOrder = Order.create({
       name: createOrderDto.name.toLowerCase(),
@@ -38,12 +38,12 @@ export class OrderService {
   }
 
 
-  async findOrder(FindNameOrderDto:FindNameOrderDto) {
+  async findOrder(FindNameOrderDto: FindNameOrderDto) {
     const order = await Order.find({
       relations: { user: true },
       select: { user: { username: true } },
-      where: {  name: Like(`%${FindNameOrderDto.name.toLowerCase()}%`), reserved: false }
-      
+      where: { name: Like(`%${FindNameOrderDto.name.toLowerCase()}%`), reserved: false }
+
     })
     return order;
   }
@@ -61,12 +61,16 @@ export class OrderService {
 
 
   async updateOrder(orderId: number, updateOrderDto: UpdateOrderDto) {
+    console.log(orderId);
+    
     const updateOrder = await Order.findOneBy({ id: orderId });
-    updateOrder.name = updateOrderDto.name.toLowerCase()
-    updateOrder.city = updateOrderDto.city
-    updateOrder.price = updateOrderDto.price
-    updateOrder.start_time = updateOrderDto.start_time
-    updateOrder.end_time = updateOrderDto.end_time
+    console.log(updateOrder);
+    
+    if (updateOrderDto.name) updateOrder.name = updateOrderDto.name.toLowerCase();
+    if (updateOrderDto.city) updateOrder.city = updateOrderDto.city;
+    if (updateOrderDto.price) updateOrder.price = updateOrderDto.price
+    if (updateOrderDto.start_time) updateOrder.start_time = updateOrderDto.start_time
+    if (updateOrderDto.end_time) updateOrder.end_time = updateOrderDto.end_time
 
     const order = await Order.save(updateOrder)
     return order
