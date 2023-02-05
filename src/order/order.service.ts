@@ -6,10 +6,21 @@ import { FindNameOrderDto } from './dto/findName-order.dto';
 import { UpdateOrderDto } from './dto/update-order.dto';
 import { Order } from './entities/order.entity';
 
+
+/**
+ * Class permettant la gestion des requètes SQL pour les orders
+ * * **.createdorder()** :ajoute un nouveau order à la BDD
+ * * **.findAllOrder()** : recupère tout les orders
+ * * **.findOrder()** : recupère un order par son name
+ * * **.findOne()** : recupère un order par ID del'order
+ * * **.updateOrder()** : modifie un order par son ID
+ */
 @Injectable()
 export class OrderService {
 
-
+  /**
+    * ajoute un nouveau order à la BDD
+    */
   async createOrder(createOrderDto: CreateOrderDto, user: User) {
 
     const newOrder = Order.create({
@@ -26,7 +37,9 @@ export class OrderService {
 
   }
 
-
+  /**
+     *  recupère tout les orders
+     */
   async findAllOrder() {
     const order = await Order.find({
       relations: { user: true },
@@ -37,7 +50,9 @@ export class OrderService {
 
   }
 
-
+  /**
+     *   recupère un order par son name
+     */
   async findOrder(FindNameOrderDto: FindNameOrderDto) {
     const order = await Order.find({
       relations: { user: true },
@@ -49,7 +64,9 @@ export class OrderService {
   }
 
 
-
+  /**
+     *  recupère un order par ID del'order
+     */
   async findOne(orderId: number) {
     const order = await Order.findOne({
       where: { id: orderId, reserved: false },
@@ -59,13 +76,15 @@ export class OrderService {
     return order;
   }
 
-
+  /**
+     *  modifie un order par son ID
+     */
   async updateOrder(orderId: number, updateOrderDto: UpdateOrderDto) {
     console.log(orderId);
-    
+
     const updateOrder = await Order.findOneBy({ id: orderId });
     console.log(updateOrder);
-    
+
     if (updateOrderDto.name) updateOrder.name = updateOrderDto.name.toLowerCase();
     if (updateOrderDto.city) updateOrder.city = updateOrderDto.city;
     if (updateOrderDto.price) updateOrder.price = updateOrderDto.price
@@ -77,7 +96,4 @@ export class OrderService {
   }
 
 
-  async ifReserved(id: number) {
-    return `This action removes a #${id} order`;
-  }
 }
